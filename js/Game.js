@@ -1,10 +1,14 @@
 
 import * as THREE from 'three';
-import { GLTFLoader } from '../threejs/examples/jsm/loaders/GLTFLoader.js';
-import { RGBELoader } from '../threejs/examples/jsm/loaders/RGBELoader.js';
-import { LoadingBar } from '../js/LoadingBar.js';
-import { VRButton } from '../js/VRButton.js';
-import { XRControllerModelFactory } from '../threejs/examples/jsm/webxr/XRControllerModelFactory.js';
+
+import { LoadingBar } from './LoadingBar';
+import { VRButton } from './VRButton';
+import {GLTFLoader} from "../threejs/examples/jsm/loaders/GLTFLoader";
+import {RGBELoader} from "../threejs/examples/jsm/loaders/RGBELoader";
+import {XRControllerModelFactory} from "../threejs/examples/jsm/webxr/XRControllerModelFactory";
+import flammable_barrel1 from "../assets/flammable_barrel1.glb"
+
+
 
 class Game{
 	constructor(){
@@ -119,7 +123,7 @@ class Game{
     }
 
     loadEnvironment(){
-    	const loader = new GLTFLoader( ).setPath(this.assetsPath);
+    	const loader = new GLTFLoader().setPath('assets/')
         
         this.loadingBar.visible = true;
 		
@@ -196,6 +200,17 @@ class Game{
 
 			}
 		);
+		loader.setPath('')
+		loader.load(
+			// resource URL
+			flammable_barrel1,
+			// called when the resource is loaded
+			gltf => {
+
+				this.scene.add( gltf.scene );
+				this.flammable_barrel1 = gltf.scene;
+			}
+			);
 	}			
 
 	setupXR(){
